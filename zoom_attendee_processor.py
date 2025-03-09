@@ -14,7 +14,7 @@ def process_zoom_attendees(file_path, timestamp_threshold, skip_rows=0):
     return digested_df
 
 # Streamlit app
-st.title("Zoom Attendee Processor")
+st.title("Zoom Attendee CSV Helper")
 
 with st.sidebar:
     st.header("Settings")
@@ -26,7 +26,7 @@ with st.sidebar:
     
     skip_rows = st.slider("Rows to skip", min_value=0, max_value=50, value=16, step=1)
 
-uploaded_file = st.file_uploader("Upload Zoom Attendee Report (.csv)", type="csv")
+uploaded_file = st.file_uploader("Upload Zoom Attendee Report (.csv) — No personal data is saved, anywhere, ever.", type="csv")
 
 if uploaded_file is not None:
     if st.button("Process File"):
