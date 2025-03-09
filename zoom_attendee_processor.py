@@ -16,6 +16,13 @@ def process_zoom_attendees(file_path, timestamp_threshold, skip_rows=0):
 # Streamlit app
 st.title("Zoom Attendee CSV Helper")
 
+# After st.title()
+st.markdown("""
+This little tool processes Zoom webinar attendee reports, and filters attendees past a given time threshold (normally used to filter those who stayed after the pitch).
+
+Upload your file, define the pitch timestamp on your left, and you’ll get a cleaned-up file with names and emails of those "pitched" ready to download!
+""")
+
 with st.sidebar:
     st.header("Settings")
     
