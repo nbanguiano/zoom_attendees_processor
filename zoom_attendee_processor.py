@@ -1,10 +1,16 @@
 import os
 import pandas as pd
 import streamlit as st
+import chardet as cd
 from datetime import datetime
 
 def process_zoom_attendees(file_path, timestamp_threshold, skip_rows=0):
-    df = pd.read_csv(file_path, skiprows=skip_rows, encoding='windows-1252')
+
+    with open(file_path, 'rb') as f:
+        result = cd.detect(f.read(100000)) # Read the first 100KB
+        detected_encoding = result['encoding']
+
+    df = pd.read_csv(file_path, skiprows=skip_rows, encoding=detected_encoding)
     df['Leave Time'] = pd.to_datetime(df['Leave Time'], errors='coerce')
     df = df.sort_values('Leave Time').drop_duplicates(subset=['Email'], keep='last')
     df = df[df['Is Guest'] == 'Yes']
@@ -16,7 +22,6 @@ def process_zoom_attendees(file_path, timestamp_threshold, skip_rows=0):
 # Streamlit app
 st.title("Zoom Attendee CSV Helper")
 
-# After st.title()
 st.markdown("""
 This little tool processes Zoom webinar attendee reports, and filters attendees past a given time threshold (normally used to filter those who stayed after the pitch).
 
