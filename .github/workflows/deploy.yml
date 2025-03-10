@@ -21,4 +21,5 @@ jobs:
           script: |
             cd /var/www/zoom_apt
             git pull origin main
+            /var/www/zoom_apt/venv/bin/pip install -r requirements.txt
             systemctl restart streamlit-zoom_apt
